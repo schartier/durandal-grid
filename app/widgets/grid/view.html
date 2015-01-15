@@ -1,0 +1,14 @@
+<table>
+  <thead>
+    <tr data-bind="foreach: { data: settings.headers }">
+      <th data-bind="text: title, click: $parent.sort">
+      </th>      
+    </tr>
+  </thead>
+  <tbody data-bind="foreach: { data: settings.items }">
+    <tr data-bind="foreach: { data: $parent.settings.headers }">
+      <td data-bind="text: $parent[fieldName]">
+      </td>
+    </tr>
+  </tbody>
+</table>

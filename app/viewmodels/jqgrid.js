@@ -1,6 +1,7 @@
 define(["jquery", "knockout", "durandal/app", "durandal/system", "plugins/router"], function ($, ko, app, system, router) {
   return {
     isLoading: ko.observable(false),
+    filterText: ko.observable('ra'),
     headers: ko.observableArray([
       {title: 'name', fieldName: 'name', sortable: true},
       {title: 'sales', fieldName: 'sales', sortable: true},

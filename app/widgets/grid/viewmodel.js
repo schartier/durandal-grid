@@ -15,7 +15,6 @@ define(['durandal/composition', 'jquery'], function (composition, $) {
     })(this);
     this.filter = (function (that) {
       return function (data, event) {
-        debugger;
         return that._filter(data.fieldName);
       };
     })(this);
@@ -23,6 +22,7 @@ define(['durandal/composition', 'jquery'], function (composition, $) {
 
   ctor.prototype.activate = function (settings) {
     this.settings = settings;
+    this.items = new Object(settings.items());
     this.settings.grid = {
       sort: {
         order: order.ascending,
@@ -34,10 +34,10 @@ define(['durandal/composition', 'jquery'], function (composition, $) {
   ctor.prototype.attached = function (view, parent) {
     var that = this;
 
-    // todo: perfome DOM manipulations here
-    $('.filter-text', view).on('change', function (event) {
-      that._filter(that.settings.filterText);
-    });
+    // todo: perfome DOM manipulations here (try to avoid if you ask me...)
+//    $('.filter-text', view).on('change', function (event) {
+//      that._filter(that.settings.filterText);
+//    });
 //    $('.grid-sort', view).on('click', function(event){
 //      
 //    });
@@ -51,17 +51,19 @@ define(['durandal/composition', 'jquery'], function (composition, $) {
     }
     this.settings.grid.sort.field = fieldName;
 
-    this.settings.items.sort(function (a, b) {
+    var items = this.items.sort(function (a, b) {
       return a[fieldName] < b[fieldName]
           ? that.settings.grid.sort.order : !that.settings.grid.sort.order;
     });
+    
+    this.settings.items(items);
   };
 
   ctor.prototype._filter = function () {
     var field,
         searchTerms = this.settings.filterText();
 
-    var items = this.settings.items().filter(function (item) {
+    var items = this.items.filter(function (item) {
       for (field in item) {
         if (item[field].toString().indexOf(searchTerms) > -1) {
           return true;

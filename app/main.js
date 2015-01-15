@@ -26,7 +26,9 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'bootstrap'],
     //>>excludeEnd("build");
 
     app.title = "durandal-jqgrid";
-
+    
+    system.debug(true);
+    
     app.configurePlugins({
         router:true,
         dialog: true,
